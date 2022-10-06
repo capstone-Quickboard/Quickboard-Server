@@ -36,3 +36,5 @@ out/
 ### VS Code ###
 .vscode/
 
+###외부 설정 값###
+application.yml
