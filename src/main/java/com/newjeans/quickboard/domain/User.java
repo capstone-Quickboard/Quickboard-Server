@@ -14,6 +14,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="user_id")
     private Long id;
 
     @Column(unique = true)
@@ -22,10 +23,10 @@ public class User {
     @Column(unique = true)
     private String fcmToken;
 
-    @OneToMany(mappedBy = "user_id")
+    @OneToMany(mappedBy = "user")
     private List<Subscribe> subscribes =new ArrayList<Subscribe>();
 
-    @OneToMany(mappedBy = "user_id")
+    @OneToMany(mappedBy = "user")
     private List<Bookmark> bookmarks =new ArrayList<Bookmark>();
 
     @Builder

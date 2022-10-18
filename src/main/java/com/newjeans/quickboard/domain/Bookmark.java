@@ -1,5 +1,6 @@
 package com.newjeans.quickboard.domain;
 
+import com.newjeans.quickboard.domain.notice.Notice;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +14,16 @@ import javax.persistence.*;
         name="bookmark",
         uniqueConstraints={
                 @UniqueConstraint(
-                        columnNames = {"user","notice"}
+                        columnNames = {"user_id","notice_id"}
                 )
         }
 )
 public class Bookmark {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="bookmark_id")
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

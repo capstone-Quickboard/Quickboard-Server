@@ -8,11 +8,14 @@ import java.util.List;
 public class Keyword {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "keyword_keyword", unique = true)
     private String keyword;
 
     private int subscribersCount;
 
-    @OneToMany(mappedBy = "keyword_keyword")
+    @OneToMany(mappedBy = "keyword")
     private List<Subscribe> subscribes=new ArrayList<Subscribe>();
 
 }

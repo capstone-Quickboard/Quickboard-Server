@@ -1,5 +1,7 @@
-package com.newjeans.quickboard.domain;
+package com.newjeans.quickboard.domain.notice;
 
+import com.newjeans.quickboard.domain.Bookmark;
+import com.newjeans.quickboard.domain.Department;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +32,7 @@ public class Notice {
     @JoinColumn(name="department_id")
     private Department department;
 
-    @OneToMany(mappedBy = "notice_id")
+    @OneToMany(mappedBy = "notice")
     private List<Bookmark> bookmarks=new ArrayList<Bookmark>();
 
     @Builder

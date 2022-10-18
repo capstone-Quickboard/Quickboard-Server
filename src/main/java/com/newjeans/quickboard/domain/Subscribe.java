@@ -10,17 +10,21 @@ import javax.persistence.*;
         name="subscribe",
         uniqueConstraints={
                 @UniqueConstraint(
-                        columnNames = {"user","keyword"}
+                        columnNames = {"user_id","keyword_keyword"}
                 )
         }
 )
 public class Subscribe {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="subscribe_id")
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "keyword_keyword")
+    @JoinColumn(name = "keyword_keyword", referencedColumnName="keyword_keyword")
     private Keyword keyword;
 }

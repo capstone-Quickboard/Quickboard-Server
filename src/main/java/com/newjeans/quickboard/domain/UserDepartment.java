@@ -18,6 +18,10 @@ import javax.persistence.*;
         }
 )
 public class UserDepartment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="userdepartment_id")
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
