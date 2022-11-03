@@ -18,8 +18,10 @@ public enum BaseResponseStatus {
      */
     // Common
     REQUEST_ERROR(false, 2000, "입력값을 확인해주세요."),
-    EMPTY_FCM(false, 2001, "FCM 토큰을 입력해주세요."),
-    INVALID_FCM(false, 2002, "유효하지 않은 FCM 토큰입니다."),
+    EMPTY_UUID(false, 2001, "UUID 토큰을 입력해주세요."),
+    INVALID_UUID(false, 2002, "유효하지 않은 UUID 토큰입니다."),
+    EMPTY_FCM(false, 2003, "FCM 토큰을 입력해주세요."),
+    INVALID_FCM(false, 2004, "유효하지 않은 FCM 토큰입니다."),
 
     POST_POSTS_EMPTY_IMGURL(false,2019,"현재 게시글의 이미지가 없습니다."),
     POSTS_EMPTY_POST_ID(false, 2020, "게시글이 존재하지 않습니다. 게시글 아이디 값을 확인해주세요."),

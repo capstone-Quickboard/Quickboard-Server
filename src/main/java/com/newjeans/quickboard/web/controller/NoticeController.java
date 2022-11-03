@@ -7,6 +7,7 @@ import com.newjeans.quickboard.web.dto.NoticeResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -15,7 +16,7 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-//    @GetMapping("notice/{departmentId}")
+    //    @GetMapping("notice/{departmentId}")
 //    public NoticeListResponseDto findByDepartmentId(@PathVariable Long departmentId){
 //        return noticeService.findByDepartmentId(departmentId);
 //    }

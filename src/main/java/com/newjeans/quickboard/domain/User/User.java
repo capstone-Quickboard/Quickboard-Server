@@ -1,5 +1,7 @@
-package com.newjeans.quickboard.domain;
+package com.newjeans.quickboard.domain.User;
 
+import com.newjeans.quickboard.domain.Bookmark;
+import com.newjeans.quickboard.domain.Subscribe;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

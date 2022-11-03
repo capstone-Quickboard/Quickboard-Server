@@ -13,6 +13,7 @@ public class NoticeResponseDto {
 
     public NoticeResponseDto(Notice entity, int dDay) {
         this.title = entity.getTitle();
+        this.content=entity.getContent();
         this.deadline = entity.getDeadLine();
         this.dDay = dDay;
     }

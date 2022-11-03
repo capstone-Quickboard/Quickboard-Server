@@ -1,4 +1,4 @@
-package com.newjeans.quickboard.domain;
+package com.newjeans.quickboard.domain.department;
 
 import com.newjeans.quickboard.domain.notice.Notice;
 import lombok.Builder;
