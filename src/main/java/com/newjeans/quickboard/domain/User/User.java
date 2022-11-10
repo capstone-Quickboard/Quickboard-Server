@@ -1,7 +1,8 @@
 package com.newjeans.quickboard.domain.User;
 
-import com.newjeans.quickboard.domain.Bookmark;
+import com.newjeans.quickboard.domain.Bookmark.Bookmark;
 import com.newjeans.quickboard.domain.Subscribe;
+import com.newjeans.quickboard.domain.userDepartment.UserDepartment;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Bookmark> bookmarks =new ArrayList<Bookmark>();
+
+    @OneToMany(mappedBy = "user")
+    private List<UserDepartment> userDepartments = new ArrayList<>();
 
     @Builder
     public User(String uuid, String fcmToken){

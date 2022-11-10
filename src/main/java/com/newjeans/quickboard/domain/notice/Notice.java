@@ -1,6 +1,6 @@
 package com.newjeans.quickboard.domain.notice;
 
-import com.newjeans.quickboard.domain.Bookmark;
+import com.newjeans.quickboard.domain.Bookmark.Bookmark;
 import com.newjeans.quickboard.domain.department.Department;
 import lombok.Builder;
 import lombok.Getter;

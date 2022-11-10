@@ -1,4 +1,4 @@
-package com.newjeans.quickboard.domain;
+package com.newjeans.quickboard.domain.Bookmark;
 
 import com.newjeans.quickboard.domain.User.User;
 import com.newjeans.quickboard.domain.notice.Notice;

@@ -22,11 +22,13 @@ public enum BaseResponseStatus {
     INVALID_UUID(false, 2002, "유효하지 않은 UUID 토큰입니다."),
     EMPTY_FCM(false, 2003, "FCM 토큰을 입력해주세요."),
     INVALID_FCM(false, 2004, "유효하지 않은 FCM 토큰입니다."),
+    ALREADY_EXIST_USER(false, 2005, "이미 존재하는 유저입니다."),
+    NOT_FOUND_USER(false,2006,"등록되지 않은 유저입니다."),
 
     POST_POSTS_EMPTY_IMGURL(false,2019,"현재 게시글의 이미지가 없습니다."),
     POSTS_EMPTY_POST_ID(false, 2020, "게시글이 존재하지 않습니다. 게시글 아이디 값을 확인해주세요."),
 
-    POST_SURVEY_EMPTY_DEADLINE(false, 2034,"마감일을 입력하세요."),
+    ALREADY_TRYED_DEPARTMENT(false, 2030,"이미 등록된 학과입니다."),
 
 
     /**
