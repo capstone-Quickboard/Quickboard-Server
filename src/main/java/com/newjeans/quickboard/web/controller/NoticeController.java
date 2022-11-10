@@ -26,7 +26,7 @@ public class NoticeController {
     }
 
     @GetMapping("/notice/{departmentId}/{noticeId}")
-    public NoticeResponseDto findByNoticeId(@PathVariable Long noticeId){
+    public NoticeResponseDto findByNoticeId(@PathVariable("noticeId") Long noticeId){
         return noticeService.findByNoticeId(noticeId);
     }
 }

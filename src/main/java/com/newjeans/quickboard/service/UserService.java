@@ -49,4 +49,15 @@ public class UserService{
         }
     }
 
+    @Transactional
+    public Long deleteBookmark(String uuid, Long noticeId) throws BaseException{
+        try{
+            User user = userRepository.getReferenceByUuid(uuid);
+            Bookmark bookmark = bookmarkRepository.getReferenceByUserIdAndNoticeId(user.getId(),noticeId);
+            bookmarkRepository.delete(bookmark);
+            return bookmark.getNotice().getId();
+        }catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }
