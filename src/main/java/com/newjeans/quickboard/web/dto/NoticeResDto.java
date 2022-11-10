@@ -4,17 +4,18 @@ import com.newjeans.quickboard.domain.notice.Notice;
 import lombok.Getter;
 
 @Getter
-public class NoticeResponseDto {
+public class NoticeResDto {
     private String title;
     private String content;
+    private String uploadDate;
     private String deadline;
     private String department;
-    private int dDay;
 
-    public NoticeResponseDto(Notice entity, int dDay) {
+    public NoticeResDto(Notice entity){
         this.title = entity.getTitle();
         this.content=entity.getContent();
         this.deadline = entity.getDeadLine();
-        this.dDay = dDay;
+        this.uploadDate = entity.getUploadDate();
+        this.department = entity.getDepartment().getName();
     }
 }

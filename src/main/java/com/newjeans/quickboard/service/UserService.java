@@ -11,8 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.newjeans.quickboard.config.BaseResponseStatus.DATABASE_ERROR;
-import static com.newjeans.quickboard.config.BaseResponseStatus.INVALID_UUID;
+import static com.newjeans.quickboard.config.BaseResponseStatus.*;
 
 @RequiredArgsConstructor
 @Service
@@ -32,7 +31,7 @@ public class UserService{
         }
     }
     @Transactional
-    public boolean checkUuidExist(String uuid) throws BaseException{
+    public boolean checkUuidExist(String uuid){
 
         return userRepository.existsByUuid(uuid);
     }

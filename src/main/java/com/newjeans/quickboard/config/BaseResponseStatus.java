@@ -25,10 +25,12 @@ public enum BaseResponseStatus {
     ALREADY_EXIST_USER(false, 2005, "이미 존재하는 유저입니다."),
     NOT_FOUND_USER(false,2006,"등록되지 않은 유저입니다."),
 
+    INVALID_DEPARTMENT_ID(false,2010,"해당 학과가 존재하지 않습니다. 학과 아이디 값을 확인해주세요."),
+
     POST_POSTS_EMPTY_IMGURL(false,2019,"현재 게시글의 이미지가 없습니다."),
     POSTS_EMPTY_POST_ID(false, 2020, "게시글이 존재하지 않습니다. 게시글 아이디 값을 확인해주세요."),
 
-    ALREADY_TRYED_DEPARTMENT(false, 2030,"이미 등록된 학과입니다."),
+    ALREADY_TRIED_DEPARTMENT(false, 2030,"이미 등록된 학과입니다."),
 
 
     /**
