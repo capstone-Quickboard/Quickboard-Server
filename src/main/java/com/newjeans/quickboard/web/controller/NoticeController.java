@@ -6,6 +6,7 @@ import com.newjeans.quickboard.config.BaseException;
 import com.newjeans.quickboard.config.BaseResponse;
 import com.newjeans.quickboard.service.NoticeService;
 import com.newjeans.quickboard.service.UserService;
+import com.newjeans.quickboard.web.dto.BookmarkedNoticeListResDto;
 import com.newjeans.quickboard.web.dto.NoticeListResDto;
 import com.newjeans.quickboard.web.dto.NoticeResDto;
 import lombok.RequiredArgsConstructor;
@@ -41,13 +42,25 @@ public class NoticeController {
         }
     }
 
-    @GetMapping("/notice/list")
+    @GetMapping("/notice/list") // /notice/list?departmentId=
     public BaseResponse<List<NoticeListResDto>> findAllByDepartment(@RequestParam Long departmentId){
         try{
             String uuid = uuidService.getUuid(); //Header에서 uuid 받아옴
             if(!userService.checkUuidExist(uuid))
                 throw new BaseException(NOT_FOUND_USER);
             return new BaseResponse<>(noticeService.findAllByDepartmentId(uuid,departmentId));
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    @GetMapping("/notice/bookmark")
+    public BaseResponse<List<BookmarkedNoticeListResDto>> findAllByBookmarked(){
+        try{
+            String uuid = uuidService.getUuid(); //Header에서 uuid 받아옴
+            if(!userService.checkUuidExist(uuid))
+                throw new BaseException(NOT_FOUND_USER);
+            return new BaseResponse<>(noticeService.findAllByBookmarked(uuid));
         }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }

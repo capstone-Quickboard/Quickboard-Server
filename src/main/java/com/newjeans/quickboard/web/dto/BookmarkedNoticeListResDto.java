@@ -2,23 +2,23 @@ package com.newjeans.quickboard.web.dto;
 
 import com.newjeans.quickboard.domain.notice.Notice;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
+@NoArgsConstructor
 @Getter
-public class NoticeListResDto {
+public class BookmarkedNoticeListResDto {
     private Long noticeId;
     private String title;
     private String uploadDate;
     private String department;
-    private boolean isBookmarked;
+    private int dDay;
 
 
-    public NoticeListResDto(Notice entity, boolean isBookmarked) {
+    public BookmarkedNoticeListResDto(Notice entity, int dDay) {
         this.noticeId = entity.getId();
         this.title = entity.getTitle();
         this.department = entity.getDepartment().getName();
         this.uploadDate = entity.getUploadDate();
-        this.isBookmarked = isBookmarked;
+        this.dDay=dDay;
     }
 }
