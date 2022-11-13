@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.newjeans.quickboard.config.BaseResponseStatus.ALREADY_EXIST_USER;
 import static com.newjeans.quickboard.config.BaseResponseStatus.NOT_FOUND_USER;
 
 @RequiredArgsConstructor
@@ -36,7 +35,10 @@ public class NoticeController {
     @GetMapping("/notice/{noticeId}")
     public BaseResponse<NoticeResDto> findByNoticeId(@PathVariable("noticeId") Long noticeId){
         try{
-            return new BaseResponse<>(noticeService.findByNoticeId(noticeId));
+            String uuid = uuidService.getUuid(); //Header에서 uuid 받아옴
+            if(!userService.checkUuidExist(uuid))
+                throw new BaseException(NOT_FOUND_USER);
+            return new BaseResponse<>(noticeService.findByNoticeId(uuid,noticeId));
         }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }

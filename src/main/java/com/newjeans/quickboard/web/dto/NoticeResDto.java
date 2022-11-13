@@ -18,4 +18,8 @@ public class NoticeResDto {
         this.uploadDate = entity.getUploadDate();
         this.department = entity.getDepartment().getName();
     }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
 }

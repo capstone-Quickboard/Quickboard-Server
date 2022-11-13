@@ -2,6 +2,7 @@ package com.newjeans.quickboard.domain.notice;
 
 import com.newjeans.quickboard.domain.Bookmark.Bookmark;
 import com.newjeans.quickboard.domain.department.Department;
+import com.newjeans.quickboard.domain.userNoticeDeadline.UserNoticeDeadline;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,8 +34,10 @@ public class Notice {
     private Department department;
 
     @OneToMany(mappedBy = "notice")
-    private List<Bookmark> bookmarks=new ArrayList<Bookmark>();
+    private List<Bookmark> bookmarks=new ArrayList<>();
 
+    @OneToMany(mappedBy = "notice")
+    private List<UserNoticeDeadline> userNoticeDeadlines=new ArrayList<>();
     @Builder
     public Notice(String url, String title, String content, String uploadDate, String deadLine){
         this.url = url;

@@ -2,9 +2,7 @@ package com.newjeans.quickboard.web.dto;
 
 import com.newjeans.quickboard.domain.notice.Notice;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @Getter
 public class BookmarkedNoticeListResDto {
     private Long noticeId;

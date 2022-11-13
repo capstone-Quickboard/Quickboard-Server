@@ -5,6 +5,7 @@ import com.newjeans.quickboard.config.BaseException;
 import com.newjeans.quickboard.config.BaseResponse;
 import com.newjeans.quickboard.service.UserService;
 import com.newjeans.quickboard.web.dto.BookmarkReqDto;
+import com.newjeans.quickboard.web.dto.DeadlineReqDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,7 +62,35 @@ public class UserController {
         }
     }
 
-    //
+    //공지사항 마감일 설정
+    @PostMapping("/notice/{noticeId}/deadline")
+    public BaseResponse<String> saveDeadline (@PathVariable("noticeId") Long noticeId, @RequestBody DeadlineReqDto deadlineReqDto){
+        try{
+            String uuid = uuidService.getUuid();//Header에서 uuid 받아옴
+            if(!userService.checkUuidExist(uuid)) //uuid가 db에 저장되어 있는지 조회
+                throw new BaseException(NOT_FOUND_USER);
+            userService.saveDeadline(uuid, noticeId, deadlineReqDto.getDeadline());
+            String result = "마감일자 등록 완료";
+            return new BaseResponse<>(result);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    //공지사항 마감일 수정
+    @PutMapping("/notice/{noticeId}/deadline")
+    public BaseResponse<String> updateDeadline (@PathVariable("noticeId") Long noticeId, @RequestBody DeadlineReqDto deadlineReqDto){
+        try{
+            String uuid = uuidService.getUuid();//Header에서 uuid 받아옴
+            if(!userService.checkUuidExist(uuid)) //uuid가 db에 저장되어 있는지 조회
+                throw new BaseException(NOT_FOUND_USER);
+            userService.updateDeadline(uuid, noticeId, deadlineReqDto.getDeadline());
+            String result = "마감일자 수정 완료";
+            return new BaseResponse<>(result);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
 
 }

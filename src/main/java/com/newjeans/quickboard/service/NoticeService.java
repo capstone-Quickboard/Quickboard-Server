@@ -10,6 +10,8 @@ import com.newjeans.quickboard.domain.department.Department;
 import com.newjeans.quickboard.domain.department.DepartmentRepository;
 import com.newjeans.quickboard.domain.notice.Notice;
 import com.newjeans.quickboard.domain.notice.NoticeRepository;
+import com.newjeans.quickboard.domain.userNoticeDeadline.UserNoticeDeadline;
+import com.newjeans.quickboard.domain.userNoticeDeadline.UserNoticeDeadlineRepository;
 import com.newjeans.quickboard.web.dto.BookmarkedNoticeListResDto;
 import com.newjeans.quickboard.web.dto.NoticeListResDto;
 import com.newjeans.quickboard.web.dto.NoticeResDto;
@@ -31,13 +33,21 @@ public class NoticeService {
     private final DepartmentRepository departmentRepository;
     private final UserRepository userRepository;
     private final BookmarkRepository bookmarkRepository;
+    private final UserNoticeDeadlineRepository userNoticeDeadlineRepository;
 
     @Transactional
-    public NoticeResDto findByNoticeId(Long noticeId) throws BaseException{
-
+    public NoticeResDto findByNoticeId(String uuid, Long noticeId) throws BaseException{
+        User user = userRepository.findByUuid(uuid);
         Optional<Notice> notice = noticeRepository.findById(noticeId);
         if (!notice.isPresent()) {
             throw new BaseException(POSTS_EMPTY_POST_ID);
+        }
+        // 유저가 커스텀한 마감기한이 있다면 따로 설정
+        if(userNoticeDeadlineRepository.existsByUserIdAndNoticeId(user.getId(), notice.get().getId())){
+            UserNoticeDeadline userNoticeDeadline = userNoticeDeadlineRepository.findByUserIdAndNoticeId(user.getId(), notice.get().getId());
+            NoticeResDto noticeResDto = new NoticeResDto(notice.get());
+            noticeResDto.setDeadline(userNoticeDeadline.getDeadline());
+            return noticeResDto;
         }
         return new NoticeResDto(notice.get());
     }
@@ -50,7 +60,7 @@ public class NoticeService {
         }
         User user = userRepository.getReferenceByUuid(uuid);
         List<Notice> noticeList = department.get().getNotices();
-        List<NoticeListResDto> noticeListResDtoList= new ArrayList<NoticeListResDto>();
+        List<NoticeListResDto> noticeListResDtoList= new ArrayList<>();
         for(Notice notice : noticeList){
             boolean isBookmarked = false ;
             if(bookmarkRepository.existsByUserIdAndNoticeId(user.getId(), notice.getId()))
