@@ -1,5 +1,6 @@
 package com.newjeans.quickboard.domain.department;
 
+import com.newjeans.quickboard.domain.user.User;
 import com.newjeans.quickboard.domain.notice.Notice;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +23,10 @@ public class Department {
     private String name;
 
     @OneToMany(mappedBy = "department")
-    private List<Notice> notices = new ArrayList<Notice>();
+    private List<Notice> notices = new ArrayList<>();
+
+    @OneToMany(mappedBy = "department")
+    private List<User> users = new ArrayList<>();
 
     @Builder
     public Department(String name){

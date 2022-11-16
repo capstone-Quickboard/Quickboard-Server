@@ -1,7 +1,7 @@
-package com.newjeans.quickboard.domain.userDepartment;
+package com.newjeans.quickboard.domain.alarmDepartment;
 
 import com.newjeans.quickboard.domain.department.Department;
-import com.newjeans.quickboard.domain.User.User;
+import com.newjeans.quickboard.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,17 +12,16 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(
-        name="user_department",
         uniqueConstraints={
                 @UniqueConstraint(
                         columnNames = {"user_id","department_id"}
                 )
         }
 )
-public class UserDepartment {
+public class AlarmDepartment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="userdepartment_id")
+    @Column(name="alarm_department_id")
     private Long id;
 
     @ManyToOne
@@ -34,7 +33,7 @@ public class UserDepartment {
     private Department department;
 
     @Builder
-    public UserDepartment(User user, Department department){
+    public AlarmDepartment(User user, Department department){
         this.user=user;
         this.department =department;
     }

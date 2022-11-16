@@ -1,6 +1,6 @@
 package com.newjeans.quickboard.domain.userNoticeDeadline;
 
-import com.newjeans.quickboard.domain.User.User;
+import com.newjeans.quickboard.domain.user.User;
 import com.newjeans.quickboard.domain.notice.Notice;
 import lombok.Builder;
 import lombok.Getter;

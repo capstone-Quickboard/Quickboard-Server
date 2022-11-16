@@ -3,8 +3,10 @@ package com.newjeans.quickboard.service;
 import com.newjeans.quickboard.config.BaseException;
 import com.newjeans.quickboard.domain.Bookmark.Bookmark;
 import com.newjeans.quickboard.domain.Bookmark.BookmarkRepository;
-import com.newjeans.quickboard.domain.User.User;
-import com.newjeans.quickboard.domain.User.UserRepository;
+import com.newjeans.quickboard.domain.user.User;
+import com.newjeans.quickboard.domain.user.UserRepository;
+import com.newjeans.quickboard.domain.department.Department;
+import com.newjeans.quickboard.domain.department.DepartmentRepository;
 import com.newjeans.quickboard.domain.notice.Notice;
 import com.newjeans.quickboard.domain.notice.NoticeRepository;
 import com.newjeans.quickboard.domain.userNoticeDeadline.UserNoticeDeadline;
@@ -22,12 +24,15 @@ public class UserService{
     private final NoticeRepository noticeRepository;
     private final BookmarkRepository bookmarkRepository;
     private final UserNoticeDeadlineRepository userNoticeDeadlineRepository;
+    private final DepartmentRepository departmentRepository;
 
     @Transactional
-    public void save(String uuid) throws BaseException {
-        //fcmtoken은 아직 포함 x
-        User user = User.builder().uuid(uuid).build();
+    public void save(String uuid, Long departmentId) throws BaseException {
+        //fcm token은 아직 포함 x
+
         try{
+            Department department = departmentRepository.getReferenceById(departmentId);
+            User user = User.builder().uuid(uuid).department(department).build();
             userRepository.save(user);
         }catch (Exception exception){
             throw new BaseException(DATABASE_ERROR);

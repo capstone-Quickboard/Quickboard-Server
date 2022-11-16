@@ -1,7 +1,6 @@
-package com.newjeans.quickboard.domain.User;
+package com.newjeans.quickboard.domain.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     //uuid 존재여부 확인

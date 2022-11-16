@@ -52,6 +52,7 @@ public enum BaseResponseStatus {
 
 
     // 5000 : 필요시 만들어서 쓰세요
+    DEPARTMENT_ID_RANGE_ERROR(false, 5000, "departmentId : 1~10 숭대전체, 11~ 전공학과"),
 
 
     // 6000 : 필요시 만들어서 쓰세요
