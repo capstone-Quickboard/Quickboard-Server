@@ -1,6 +1,7 @@
 package com.newjeans.quickboard.domain;
 
 import com.newjeans.quickboard.domain.User.User;
+import com.newjeans.quickboard.domain.keyword.Keyword;
 import lombok.Getter;
 
 import javax.persistence.*;

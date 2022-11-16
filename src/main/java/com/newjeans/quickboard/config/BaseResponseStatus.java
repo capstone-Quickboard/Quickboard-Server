@@ -32,6 +32,8 @@ public enum BaseResponseStatus {
 
     ALREADY_TRIED_DEPARTMENT(false, 2030,"이미 등록된 학과입니다."),
 
+    ALREADY_DELETE_KEYWORD(false, 2050, "이미 삭제된 키워드입니다."),
+
 
     /**
      * 3000 : Response 오류
