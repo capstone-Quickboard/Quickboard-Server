@@ -17,12 +17,16 @@ public class KeywordService {
     private final KeywordRepository keywordRepository;
 
     public Long save(KeywordSaveRequestDto requestDto) {
-        return keywordRepository.save(requestDto.toEntity()).getId();
+
+        if(checkKeywordExist(requestDto.getKeyword())) {
+            requestDto.KeywordplusRequestDto(requestDto.getSubscriberCount());
+            return keywordRepository.findByKeyword(requestDto.getKeyword()).getId();
+
+        } else
+            return keywordRepository.save(requestDto.toEntity()).getId();
     }
 
-//    public void deleteById(Long id) {
-//        keywordRepository.deleteById(id);
-//    }
+
     public void deleteAllByKeyword(String keyword) throws BaseException {
         try {
             Keyword deleteKeyword = keywordRepository.getReferenceByKeyword(keyword);
@@ -30,8 +34,18 @@ public class KeywordService {
         } catch(Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
-
     }
+
+    public boolean checkKeywordExist(String keyword) {
+        return keywordRepository.existsKByKeyword(keyword);
+    }
+
+    public void plussubscribersCount(Keyword keyword) {
+        keyword.builder().subscribersCount(keyword.getSubscribersCount() + 1).build();
+    }
+
+
+
 }
 
 

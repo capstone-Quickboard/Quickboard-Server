@@ -18,6 +18,11 @@ public class KeywordSaveRequestDto {
         this.keyword = keyword;
     }
 
+    @Builder
+    public void KeywordplusRequestDto(int subscriberCount) {
+        this.subscriberCount = subscriberCount + 1;
+    }
+
     public Keyword toEntity() {
         return Keyword.builder()
                 .keyword(keyword)
