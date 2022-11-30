@@ -52,8 +52,8 @@ public class KeywordService {
         try {
             User user = userRepository.getReferenceByUuid(uuid);
             Keyword deleteKeyword = keywordRepository.getReferenceByKeyword(keyword);
-
-            subscribeRepository.deleteAllByUser(user);
+            Subscribe deleteSubscribe = subscribeRepository.getReferenceByUuidKeyword(uuid, keyword);
+            subscribeRepository.deleteAllBySubscribe(deleteSubscribe);
             System.out.println("@@@@@@@@@@@@@@@@@");
             deleteKeyword.minusSubscribers();
             if(deleteKeyword.getSubscribersCount()==0) {
