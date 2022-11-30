@@ -1,8 +1,11 @@
-package com.newjeans.quickboard.domain;
+package com.newjeans.quickboard.domain.subscribe;
 
 import com.newjeans.quickboard.domain.User.User;
+import com.newjeans.quickboard.domain.department.Department;
 import com.newjeans.quickboard.domain.keyword.Keyword;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -16,6 +19,7 @@ import javax.persistence.*;
                 )
         }
 )
+@NoArgsConstructor
 public class Subscribe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +33,10 @@ public class Subscribe {
     @ManyToOne
     @JoinColumn(name = "keyword_keyword", referencedColumnName="keyword_keyword")
     private Keyword keyword;
+
+    @Builder
+    public Subscribe(User user, Keyword keyword){
+        this.user = user;
+        this.keyword = keyword;
+    }
 }

@@ -11,22 +11,10 @@ public class KeywordSaveRequestDto {
 
 
     private String keyword;
-    private int subscriberCount;
 
     @Builder
     public KeywordSaveRequestDto(String keyword) {
         this.keyword = keyword;
     }
 
-    @Builder
-    public void KeywordplusRequestDto(int subscriberCount) {
-        this.subscriberCount = subscriberCount + 1;
-    }
-
-    public Keyword toEntity() {
-        return Keyword.builder()
-                .keyword(keyword)
-                .subscribersCount(getSubscriberCount()+1)
-                .build();
-    }
 }

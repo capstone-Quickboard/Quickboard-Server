@@ -1,7 +1,7 @@
 package com.newjeans.quickboard.domain.User;
 
 import com.newjeans.quickboard.domain.Bookmark.Bookmark;
-import com.newjeans.quickboard.domain.Subscribe;
+import com.newjeans.quickboard.domain.subscribe.Subscribe;
 import com.newjeans.quickboard.domain.userDepartment.UserDepartment;
 import com.newjeans.quickboard.domain.userNoticeDeadline.UserNoticeDeadline;
 import lombok.Builder;

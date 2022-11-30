@@ -7,7 +7,7 @@ public interface KeywordRepository extends JpaRepository<Keyword, Long> {
 
     Keyword getReferenceByKeyword(String keyword);
 
-    boolean existsKByKeyword(String keyword);
+    boolean existsByKeyword(String keyword);
 
     Keyword findByKeyword(String keyword);
 }

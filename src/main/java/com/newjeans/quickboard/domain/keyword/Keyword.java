@@ -1,13 +1,10 @@
 package com.newjeans.quickboard.domain.keyword;
 
-import com.newjeans.quickboard.domain.Subscribe;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Getter
@@ -32,4 +29,13 @@ public class Keyword {
         this.keyword = keyword;
         this.subscribersCount = subscribersCount;
     }
+
+    public void plusSubscribers() {
+        this.subscribersCount++;
+    }
+
+    public void minusSubscribers() {this.subscribersCount--;}
+
+
+
 }

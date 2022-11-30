@@ -1,22 +1,30 @@
 server:
   port: 9000
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
 
 spring:
   application:
     name: quickboard
-  http:
-    encoding:
-      charset: utf-8
-      force: true
   jpa:
     hibernate:
       ddl-auto: update
 
   datasource:
-    platform: mysql
     url:  jdbc:mysql://quickboard-db.c6wvuor4mauu.ap-northeast-2.rds.amazonaws.com:3306/quickboard_db # 변경해주세요
     username: admin
     password: newjeans20220901
     driver-class-name: com.mysql.cj.jdbc.Driver
     # mysql 8버전
     # driver-class-name: com.mysql.jdbc.Driver # mysql 5버전
+  sql:
+    init:
+      platform: mysql
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          autoconfigure: ERROR
