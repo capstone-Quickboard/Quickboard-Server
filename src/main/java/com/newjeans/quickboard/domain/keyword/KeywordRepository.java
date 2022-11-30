@@ -10,4 +10,5 @@ public interface KeywordRepository extends JpaRepository<Keyword, Long> {
     boolean existsByKeyword(String keyword);
 
     Keyword findByKeyword(String keyword);
+
 }

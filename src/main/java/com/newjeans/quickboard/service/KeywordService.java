@@ -23,6 +23,7 @@ public class KeywordService {
     private final UserRepository userRepository;
 
     private final SubscribeRepository subscribeRepository;
+
     @Transactional
     public void save(String uuid, KeywordSaveRequestDto requestDto) throws BaseException {
         try {
@@ -52,8 +53,8 @@ public class KeywordService {
         try {
             User user = userRepository.getReferenceByUuid(uuid);
             Keyword deleteKeyword = keywordRepository.getReferenceByKeyword(keyword);
-            Subscribe deleteSubscribe = subscribeRepository.getReferenceByUuidKeyword(uuid, keyword);
-            subscribeRepository.deleteAllBySubscribe(deleteSubscribe);
+            Subscribe subscribe =subscribeRepository.findByUserAndKeyword(user, deleteKeyword);
+            subscribeRepository.delete(subscribe);
             System.out.println("@@@@@@@@@@@@@@@@@");
             deleteKeyword.minusSubscribers();
             if(deleteKeyword.getSubscribersCount()==0) {
