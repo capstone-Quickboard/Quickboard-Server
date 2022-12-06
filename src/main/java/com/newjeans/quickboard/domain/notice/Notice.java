@@ -1,6 +1,6 @@
 package com.newjeans.quickboard.domain.notice;
 
-import com.newjeans.quickboard.domain.Bookmark.Bookmark;
+import com.newjeans.quickboard.domain.bookmark.Bookmark;
 import com.newjeans.quickboard.domain.department.Department;
 import com.newjeans.quickboard.domain.userNoticeDeadline.UserNoticeDeadline;
 import lombok.Builder;
@@ -38,6 +38,7 @@ public class Notice {
 
     @OneToMany(mappedBy = "notice")
     private List<UserNoticeDeadline> userNoticeDeadlines=new ArrayList<>();
+
     @Builder
     public Notice(String url, String title, String content, String uploadDate, String deadLine){
         this.url = url;
