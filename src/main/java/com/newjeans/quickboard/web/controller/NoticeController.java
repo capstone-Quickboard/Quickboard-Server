@@ -4,16 +4,14 @@ package com.newjeans.quickboard.web.controller;
 import com.newjeans.quickboard.UuidService;
 import com.newjeans.quickboard.config.BaseException;
 import com.newjeans.quickboard.config.BaseResponse;
+import com.newjeans.quickboard.domain.notice.Notice;
 import com.newjeans.quickboard.service.NoticeService;
 import com.newjeans.quickboard.service.UserService;
-import com.newjeans.quickboard.web.dto.BookmarkedNoticeListResDto;
-import com.newjeans.quickboard.web.dto.NoticeListResDto;
-import com.newjeans.quickboard.web.dto.NoticeResDto;
+import com.newjeans.quickboard.web.dto.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,14 +41,17 @@ public class NoticeController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
-
+    /**
+    * departmentId로 학과 공지사항 리스트 조회
+     * paging 처리
+    **/
     @GetMapping("/notice/list") // /notice/list?departmentId=
-    public BaseResponse<List<NoticeListResDto>> findAllByDepartment(@RequestParam Long departmentId){
+    public BaseResponse<SliceResDto<NoticeListResDto>> findAllByDepartment(@RequestBody NoticeListReqDto noticeListReqDto, @RequestParam Long departmentId, Pageable pageable){
         try{
             String uuid = uuidService.getUuid(); //Header에서 uuid 받아옴
             if(!userService.checkUuidExist(uuid))
                 throw new BaseException(NOT_FOUND_USER);
-            return new BaseResponse<>(noticeService.findAllByDepartmentId(uuid,departmentId));
+            return new BaseResponse<>(noticeService.findAllByDepartmentId(uuid,departmentId,noticeListReqDto, pageable));
         }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }

@@ -12,10 +12,10 @@ import com.newjeans.quickboard.domain.notice.Notice;
 import com.newjeans.quickboard.domain.notice.NoticeRepository;
 import com.newjeans.quickboard.domain.userNoticeDeadline.UserNoticeDeadline;
 import com.newjeans.quickboard.domain.userNoticeDeadline.UserNoticeDeadlineRepository;
-import com.newjeans.quickboard.web.dto.BookmarkedNoticeListResDto;
-import com.newjeans.quickboard.web.dto.NoticeListResDto;
-import com.newjeans.quickboard.web.dto.NoticeResDto;
+import com.newjeans.quickboard.web.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,21 +52,23 @@ public class NoticeService {
     }
 
     @Transactional
-    public List<NoticeListResDto> findAllByDepartmentId(String uuid, Long departmentId) throws BaseException{
+    public SliceResDto<NoticeListResDto> findAllByDepartmentId(String uuid, Long departmentId,
+                                              NoticeListReqDto noticeListReqDto,
+                                              Pageable pageable) throws BaseException{
         Optional<Department> department = departmentRepository.findById(departmentId);
         if(!department.isPresent()){
             throw new BaseException(INVALID_DEPARTMENT_ID);
         }
         User user = userRepository.getReferenceByUuid(uuid);
-        List<Notice> noticeList = department.get().getNotices();
-        List<NoticeListResDto> noticeListResDtoList= new ArrayList<>();
-        for(Notice notice : noticeList){
+        Slice<Notice> sliceNoticeList = noticeRepository.findByDepartmentOrderByUploadDateDesc(department.get(),noticeListReqDto.getLastNoticeId(),pageable);
+        List<NoticeListResDto> noticeList = new ArrayList<>();
+        for(Notice notice : sliceNoticeList){
             boolean isBookmarked = false ;
             if(bookmarkRepository.existsByUserIdAndNoticeId(user.getId(), notice.getId()))
                 isBookmarked=true;
-            noticeListResDtoList.add(new NoticeListResDto(notice,isBookmarked));
+            noticeList.add(new NoticeListResDto(notice,isBookmarked));
         }
-        return noticeListResDtoList;
+        return new SliceResDto<>(sliceNoticeList.getNumberOfElements(), sliceNoticeList.hasNext(), noticeList);
     }
 
     @Transactional

@@ -48,6 +48,8 @@ public class UserService{
     public Long saveBookmark(String uuid, Long noticeId) throws BaseException{
         try{
             User user = userRepository.getReferenceByUuid(uuid);
+            if(bookmarkRepository.existsByUserIdAndNoticeId(user.getId(), noticeId))
+                throw new BaseException(ALREADY_EXIST_BOOKMARK);
             Notice notice = noticeRepository.getReferenceById(noticeId);
             Bookmark bookmark = Bookmark.builder().user(user).notice(notice).build();
             return bookmarkRepository.save(bookmark).getNotice().getId();
@@ -60,6 +62,7 @@ public class UserService{
     public Long deleteBookmark(String uuid, Long noticeId) throws BaseException{
         try{
             User user = userRepository.getReferenceByUuid(uuid);
+            //++++없는 북마크 지우려고 할때
             Bookmark bookmark = bookmarkRepository.getReferenceByUserIdAndNoticeId(user.getId(),noticeId);
             bookmarkRepository.delete(bookmark);
             return bookmark.getNotice().getId();

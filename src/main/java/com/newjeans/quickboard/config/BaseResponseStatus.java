@@ -29,6 +29,7 @@ public enum BaseResponseStatus {
 
     POST_POSTS_EMPTY_IMGURL(false,2019,"현재 게시글의 이미지가 없습니다."),
     POSTS_EMPTY_POST_ID(false, 2020, "게시글이 존재하지 않습니다. 게시글 아이디 값을 확인해주세요."),
+    ALREADY_EXIST_BOOKMARK(false, 2021, "이미 등록된 북마크 입니다."),
 
     ALREADY_TRIED_DEPARTMENT(false, 2030,"이미 등록된 학과입니다."),
 
