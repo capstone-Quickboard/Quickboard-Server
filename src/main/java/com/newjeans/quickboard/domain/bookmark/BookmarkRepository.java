@@ -1,6 +1,5 @@
-package com.newjeans.quickboard.domain.Bookmark;
+package com.newjeans.quickboard.domain.bookmark;
 
-import com.newjeans.quickboard.domain.department.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {

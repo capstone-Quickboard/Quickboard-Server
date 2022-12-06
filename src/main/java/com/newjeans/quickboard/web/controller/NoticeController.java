@@ -46,7 +46,8 @@ public class NoticeController {
      * paging 처리
     **/
     @GetMapping("/notice/list") // /notice/list?departmentId=
-    public BaseResponse<SliceResDto<NoticeListResDto>> findAllByDepartment(@RequestBody NoticeListReqDto noticeListReqDto, @RequestParam Long departmentId, Pageable pageable){
+    public BaseResponse<SliceResDto<NoticeListResDto>> findAllByDepartment(@RequestBody NoticeListReqDto noticeListReqDto,
+                                                                           @RequestParam Long departmentId, Pageable pageable){
         try{
             String uuid = uuidService.getUuid(); //Header에서 uuid 받아옴
             if(!userService.checkUuidExist(uuid))
@@ -58,12 +59,12 @@ public class NoticeController {
     }
 
     @GetMapping("/notice/bookmark")
-    public BaseResponse<List<BookmarkedNoticeListResDto>> findAllByBookmarked(){
+    public BaseResponse<SliceResDto<BookmarkedNoticeListResDto>> findAllByBookmarked(@RequestBody NoticeListReqDto noticeListReqDto, Pageable pageable){
         try{
             String uuid = uuidService.getUuid(); //Header에서 uuid 받아옴
             if(!userService.checkUuidExist(uuid))
                 throw new BaseException(NOT_FOUND_USER);
-            return new BaseResponse<>(noticeService.findAllByBookmarked(uuid));
+            return new BaseResponse<>(noticeService.findAllByBookmarked(uuid, noticeListReqDto, pageable));
         }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }

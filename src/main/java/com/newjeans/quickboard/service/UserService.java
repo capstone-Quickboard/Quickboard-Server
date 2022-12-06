@@ -1,8 +1,8 @@
 package com.newjeans.quickboard.service;
 
 import com.newjeans.quickboard.config.BaseException;
-import com.newjeans.quickboard.domain.Bookmark.Bookmark;
-import com.newjeans.quickboard.domain.Bookmark.BookmarkRepository;
+import com.newjeans.quickboard.domain.bookmark.Bookmark;
+import com.newjeans.quickboard.domain.bookmark.BookmarkRepository;
 import com.newjeans.quickboard.domain.user.User;
 import com.newjeans.quickboard.domain.user.UserRepository;
 import com.newjeans.quickboard.domain.department.Department;

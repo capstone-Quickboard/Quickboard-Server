@@ -8,7 +8,6 @@ import java.util.List;
 
 @Builder
 @AllArgsConstructor
-@Getter
 public class SliceResDto<D> {
     private int numberOfElements;
     private boolean hasNext;

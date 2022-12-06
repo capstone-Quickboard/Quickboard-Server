@@ -2,8 +2,7 @@ package com.newjeans.quickboard.service;
 
 
 import com.newjeans.quickboard.config.BaseException;
-import com.newjeans.quickboard.domain.Bookmark.Bookmark;
-import com.newjeans.quickboard.domain.Bookmark.BookmarkRepository;
+import com.newjeans.quickboard.domain.bookmark.BookmarkRepository;
 import com.newjeans.quickboard.domain.user.User;
 import com.newjeans.quickboard.domain.user.UserRepository;
 import com.newjeans.quickboard.domain.department.Department;
@@ -72,16 +71,18 @@ public class NoticeService {
     }
 
     @Transactional
-    public List<BookmarkedNoticeListResDto> findAllByBookmarked(String uuid) throws BaseException{
+    public SliceResDto<BookmarkedNoticeListResDto> findAllByBookmarked(String uuid,
+                                                                NoticeListReqDto noticeListReqDto,
+                                                                Pageable pageable) throws BaseException{
         try {
             User user = userRepository.findByUuid(uuid);
-            List<Bookmark> bookmarkList = user.getBookmarks();
-            List<BookmarkedNoticeListResDto> bookmarkedNoticeListResDtoList = new ArrayList<>();
 
-            for (Bookmark bookmark : bookmarkList) {
-                Notice notice = bookmark.getNotice();
+            Slice<Notice> sliceBookmarkedNoticeList = noticeRepository.findBookMarkedNoticeOrderByUploadDateDesc(user,noticeListReqDto.getLastNoticeId(),pageable);
+            List<BookmarkedNoticeListResDto> bookmarkedNoticeList = new ArrayList<>();
+
+            for (Notice bookmarkedNotice : sliceBookmarkedNoticeList) {
                 //d-day 구하기
-                String strDeadLine = notice.getDeadLine();
+                String strDeadLine = bookmarkedNotice.getDeadLine();
                 String strToday = new SimpleDateFormat("yyyyMMdd").format(new Date(System.currentTimeMillis())); // 오늘날짜
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
                 Date deadLine = new Date(dateFormat.parse(strDeadLine).getTime());
@@ -89,9 +90,9 @@ public class NoticeService {
                 long calculate = deadLine.getTime() - today.getTime();
                 int dDays = (int) (calculate / (24 * 60 * 60 * 1000));
 
-                bookmarkedNoticeListResDtoList.add(new BookmarkedNoticeListResDto(notice, dDays));
+                bookmarkedNoticeList.add(new BookmarkedNoticeListResDto(bookmarkedNotice, dDays));
             }
-            return bookmarkedNoticeListResDtoList;
+            return new SliceResDto<>(sliceBookmarkedNoticeList.getNumberOfElements(), sliceBookmarkedNoticeList.hasNext(), bookmarkedNoticeList);
         }catch (Exception exception){
             throw new BaseException(DATABASE_ERROR);
         }
