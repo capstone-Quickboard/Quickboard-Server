@@ -9,10 +9,10 @@ public class BookmarkedNoticeListResDto {
     private String title;
     private String uploadDate;
     private String department;
-    private int dDay;
+    private Integer dDay;
 
 
-    public BookmarkedNoticeListResDto(Notice entity, int dDay) {
+    public BookmarkedNoticeListResDto(Notice entity, Integer dDay) {
         this.noticeId = entity.getId();
         this.title = entity.getTitle();
         this.department = entity.getDepartment().getName();

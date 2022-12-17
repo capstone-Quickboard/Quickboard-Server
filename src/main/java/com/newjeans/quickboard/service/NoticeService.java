@@ -52,14 +52,14 @@ public class NoticeService {
 
     @Transactional
     public SliceResDto<NoticeListResDto> findAllByDepartmentId(String uuid, Long departmentId,
-                                              NoticeListReqDto noticeListReqDto,
+                                              Long lastNoticeId,
                                               Pageable pageable) throws BaseException{
         Optional<Department> department = departmentRepository.findById(departmentId);
         if(!department.isPresent()){
             throw new BaseException(INVALID_DEPARTMENT_ID);
         }
         User user = userRepository.getReferenceByUuid(uuid);
-        Slice<Notice> sliceNoticeList = noticeRepository.findByDepartmentOrderByUploadDateDesc(department.get(),noticeListReqDto.getLastNoticeId(),pageable);
+        Slice<Notice> sliceNoticeList = noticeRepository.findByDepartmentOrderByUploadDateDesc(department.get(),lastNoticeId,pageable);
         List<NoticeListResDto> noticeList = new ArrayList<>();
         for(Notice notice : sliceNoticeList){
             boolean isBookmarked = false ;
@@ -71,26 +71,28 @@ public class NoticeService {
     }
 
     @Transactional
-    public SliceResDto<BookmarkedNoticeListResDto> findAllByBookmarked(String uuid,
-                                                                NoticeListReqDto noticeListReqDto,
+    public SliceResDto<BookmarkedNoticeListResDto> findAllByBookmarked(String uuid, Long lastNoticeId,
                                                                 Pageable pageable) throws BaseException{
         try {
             User user = userRepository.findByUuid(uuid);
 
-            Slice<Notice> sliceBookmarkedNoticeList = noticeRepository.findBookMarkedNoticeOrderByUploadDateDesc(user,noticeListReqDto.getLastNoticeId(),pageable);
+            Slice<Notice> sliceBookmarkedNoticeList = noticeRepository.findBookMarkedNoticeOrderByUploadDateDesc(user,lastNoticeId,pageable);
             List<BookmarkedNoticeListResDto> bookmarkedNoticeList = new ArrayList<>();
 
             for (Notice bookmarkedNotice : sliceBookmarkedNoticeList) {
                 //d-day 구하기
-                String strDeadLine = bookmarkedNotice.getDeadLine();
-                String strToday = new SimpleDateFormat("yyyyMMdd").format(new Date(System.currentTimeMillis())); // 오늘날짜
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-                Date deadLine = new Date(dateFormat.parse(strDeadLine).getTime());
-                Date today = new Date(dateFormat.parse(strToday).getTime());
-                long calculate = deadLine.getTime() - today.getTime();
-                int dDays = (int) (calculate / (24 * 60 * 60 * 1000));
-
-                bookmarkedNoticeList.add(new BookmarkedNoticeListResDto(bookmarkedNotice, dDays));
+                if(bookmarkedNotice.getDeadLine()!=null) {
+                    String strDeadLine = bookmarkedNotice.getDeadLine();
+                    String strToday = new SimpleDateFormat("yyyyMMdd").format(new Date(System.currentTimeMillis())); // 오늘날짜
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+                    Date deadLine = new Date(dateFormat.parse(strDeadLine).getTime());
+                    Date today = new Date(dateFormat.parse(strToday).getTime());
+                    long calculate = deadLine.getTime() - today.getTime();
+                    int dDays = (int) (calculate / (24 * 60 * 60 * 1000));
+                    bookmarkedNoticeList.add(new BookmarkedNoticeListResDto(bookmarkedNotice, dDays));
+                }else{
+                    bookmarkedNoticeList.add(new BookmarkedNoticeListResDto(bookmarkedNotice,null));
+                }
             }
             return new SliceResDto<>(sliceBookmarkedNoticeList.getNumberOfElements(), sliceBookmarkedNoticeList.hasNext(), bookmarkedNoticeList);
         }catch (Exception exception){
