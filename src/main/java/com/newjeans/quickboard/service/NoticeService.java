@@ -79,12 +79,28 @@ public class NoticeService {
             Slice<Notice> sliceBookmarkedNoticeList = noticeRepository.findBookMarkedNoticeOrderByUploadDateDesc(user,lastNoticeId,pageable);
             List<BookmarkedNoticeListResDto> bookmarkedNoticeList = new ArrayList<>();
 
+            //d-day 구하기
             for (Notice bookmarkedNotice : sliceBookmarkedNoticeList) {
-                //d-day 구하기
-                if(bookmarkedNotice.getDeadLine()!=null) {
+
+                //유저가 커스텀한 deadline이 있을 경우
+                if(userNoticeDeadlineRepository.existsByUserIdAndNoticeId(user.getId(), bookmarkedNotice.getId())){
+                    UserNoticeDeadline userNoticeDeadline = userNoticeDeadlineRepository.findByUserIdAndNoticeId(user.getId(), bookmarkedNotice.getId());
+                    String strDeadLine = userNoticeDeadline.getDeadline();
+                    String strToday = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis())); // 오늘날짜
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date deadLine = new Date(dateFormat.parse(strDeadLine).getTime());
+                    System.out.println("strdeadline"+strDeadLine);
+                    System.out.println("deadline"+deadLine);
+                    Date today = new Date(dateFormat.parse(strToday).getTime());
+                    System.out.println("strToday"+strToday);
+                    System.out.println("today"+today);
+                    long calculate = deadLine.getTime() - today.getTime();
+                    int dDays = (int) (calculate / (24 * 60 * 60 * 1000));
+                    bookmarkedNoticeList.add(new BookmarkedNoticeListResDto(bookmarkedNotice, dDays));
+                }else if(bookmarkedNotice.getDeadLine()!=null) {
                     String strDeadLine = bookmarkedNotice.getDeadLine();
-                    String strToday = new SimpleDateFormat("yyyyMMdd").format(new Date(System.currentTimeMillis())); // 오늘날짜
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+                    String strToday = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis())); // 오늘날짜
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     Date deadLine = new Date(dateFormat.parse(strDeadLine).getTime());
                     Date today = new Date(dateFormat.parse(strToday).getTime());
                     long calculate = deadLine.getTime() - today.getTime();
